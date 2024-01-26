@@ -17,7 +17,7 @@ class StudentDb:
         
     def update_student(self, student_id, first_name, last_name, email):
         try:
-            query = "UPDATE students set first_name=%s, last_name=%s, email=%s WHERE id=%s"
+            query = "UPDATE students SET first_name=%s, last_name=%s, email=%s WHERE id=%s"
             self._cur.execute(query,(first_name,last_name,email,student_id))
             self._conn.commit()
             return True

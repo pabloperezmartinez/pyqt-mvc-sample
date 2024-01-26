@@ -17,7 +17,7 @@ class MainWindow(QMainWindow):
         self.load_students()
         
         
-        self.newStudentAction.triggered.connect(lambda: self._studentForm.show())
+        self.newStudentAction.triggered.connect(lambda: self.create_student())
         self._studentForm.student_saved.connect(self.load_students)
         
     
@@ -30,7 +30,10 @@ class MainWindow(QMainWindow):
             self.studentsTable.setItem(i, 1, QTableWidgetItem(first_name))
             self.studentsTable.setItem(i, 2, QTableWidgetItem(last_name))
             self.studentsTable.setItem(i, 3, QTableWidgetItem(email))
-            self.studentsTable.item(i,0).setFlags(QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable)
+            self.studentsTable.item(i, 0).setFlags(QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable)
+            self.studentsTable.item(i, 1).setFlags(QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable)
+            self.studentsTable.item(i, 2).setFlags(QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable)
+            self.studentsTable.item(i, 3).setFlags(QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable)
 
             # Botón de Edición
             edit_button = QPushButton("Editar")
@@ -43,6 +46,10 @@ class MainWindow(QMainWindow):
         row = sender.property("row")
         student_id = self.studentsTable.item(row, 0).text()
         self._studentForm.load_student_data(student_id)
+        self._studentForm.show()
+    
+    def create_student(self):
+        self._studentForm.reset_form()
         self._studentForm.show()
     
     def deleteButton(self):

@@ -38,6 +38,12 @@ class StudentForm(QWidget):
         self.student_id = student_id
         student_data = self.__student_db.get_student_by_id(student_id)
         if student_data:
-            self.firstNameTextField.setText(student_data[1])  # Ajusta los índices según tu modelo
+            self.firstNameTextField.setText(student_data[1])
             self.lastNameTextField.setText(student_data[2])
             self.emailTextField.setText(student_data[3])
+            
+    def reset_form(self):
+        self.firstNameTextField.setText("")
+        self.lastNameTextField.setText("")
+        self.emailTextField.setText("")
+        self.student_id = None 
