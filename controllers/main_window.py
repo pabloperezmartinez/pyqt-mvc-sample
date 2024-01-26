@@ -4,12 +4,12 @@ from PyQt5.QtWidgets import QMainWindow, QWidget, QTableWidgetItem, QMessageBox,
 from PyQt5 import QtCore, uic
 from controllers.student_form import StudentForm
 
-from models.student_db import StudentDb
+from models.student_model import StudentModel
 
 class MainWindow(QMainWindow):
     def __init__(self) -> None:
         super().__init__()
-        self.__student_db = StudentDb()
+        self.__student_db = StudentModel()
         self._studentForm = StudentForm()
         
         mod_path = pathlib.Path(__file__).parent.parent

@@ -3,14 +3,14 @@ import pathlib
 from PyQt5.QtWidgets import QMainWindow, QWidget, QTableWidgetItem
 from PyQt5 import QtCore, uic
 from PyQt5.QtCore import pyqtSignal
-from models.student_db import StudentDb
+from models.student_model import StudentModel
 
 
 class StudentForm(QWidget):
     student_saved = pyqtSignal()    
     def __init__(self) -> None:
         super().__init__()
-        self.__student_db = StudentDb()
+        self.__student_db = StudentModel()
         self.student_id = None 
         mod_path = pathlib.Path(__file__).parent.parent
         uic.loadUi(mod_path / "views/student_form.ui",self)

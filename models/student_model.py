@@ -1,8 +1,8 @@
 import psycopg2
 
-class StudentDb:
+class StudentModel:
     def __init__(self) -> None:
-        self._conn = psycopg2.connect("dbname=pabloperez_1 user=postgres password=pucetec host=localhost")
+        self._conn = psycopg2.connect("dbname=pabloperez_1 user=postgres password=postgres host=localhost")
         self._cur = self._conn.cursor()
     
     def get_students(self):
