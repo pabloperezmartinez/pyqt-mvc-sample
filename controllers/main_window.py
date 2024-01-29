@@ -1,6 +1,6 @@
 import typing
 import pathlib
-from PyQt5.QtWidgets import QMainWindow, QWidget, QTableWidgetItem, QMessageBox, QPushButton
+from PyQt5.QtWidgets import QMainWindow,  QTableWidgetItem, QMessageBox, QPushButton
 from PyQt5 import QtCore, uic
 from controllers.student_form import StudentForm
 
@@ -9,11 +9,10 @@ from models.student_model import StudentModel
 class MainWindow(QMainWindow):
     def __init__(self) -> None:
         super().__init__()
-        self.__student_db = StudentModel()
-        self._studentForm = StudentForm()
-        
         mod_path = pathlib.Path(__file__).parent.parent
-        uic.loadUi(mod_path / "views/gestor.ui",self)
+        uic.loadUi(mod_path / "views/main_window.ui",self)
+        self._studentForm = StudentForm()
+        self.__student_db = StudentModel()
         self.load_students()
         
         
@@ -39,7 +38,13 @@ class MainWindow(QMainWindow):
             edit_button = QPushButton("Editar")
             edit_button.clicked.connect(self.edit_student)
             edit_button.setProperty("row", i)
-            self.studentsTable.setCellWidget(i, 4, edit_button)  # Asegúrate de que la columna 4 sea para el botón de edición
+            self.studentsTable.setCellWidget(i, 4, edit_button)
+            
+            # Botón de Eliminación
+            delete_button = QPushButton("Eliminar")
+            delete_button.clicked.connect(self.delete_student)
+            delete_button.setProperty("row", i)
+            self.studentsTable.setCellWidget(i, 5, delete_button)
            
     def edit_student(self):
         sender = self.sender()
@@ -52,26 +57,27 @@ class MainWindow(QMainWindow):
         self._studentForm.reset_form()
         self._studentForm.show()
     
-    def deleteButton(self):
+    def delete_student(self):
         sender = self.sender()
         row = sender.property("row")
-        print("El botón de la fila {} fue apachurrado".format(row+1))
         
-        msg = "¿Seguro que desea borrar esta fila?"
+        msg = f"¿Está seguro que desea borrar el estudiante {self.studentsTable.item(row, 1).text()}"\
+              f"{self.studentsTable.item(row, 2).text()}?"
         msgBox = QMessageBox()
         msgBox.setIcon(QMessageBox.Question)
         msgBox.setText(msg)
-        msgBox.setWindowTitle("Edición de estudiante")
+        msgBox.setWindowTitle("Eliminar estudiante")
         msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel) 
         returnValue = msgBox.exec()
         if returnValue == QMessageBox.Ok:
             student_id = self.studentsTable.item(row,0).text()
             print(student_id)
             self.__student_db.delete_student(str(student_id))
+            self.load_students()
             msgBox2 = QMessageBox()
             msgBox2.setIcon(QMessageBox.Information)
             msgBox2.setText("La operación se ha realizado con éxito")
-            msgBox2.setWindowTitle("Edición de estudiante")
+            msgBox2.setWindowTitle("Eliminar estudiante")
             msgBox2.exec_()
             
                 

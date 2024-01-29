@@ -1,6 +1,6 @@
 import typing
 import pathlib
-from PyQt5.QtWidgets import QMainWindow, QWidget, QTableWidgetItem
+from PyQt5.QtWidgets import QWidget
 from PyQt5 import QtCore, uic
 from PyQt5.QtCore import pyqtSignal
 from models.student_model import StudentModel
@@ -10,23 +10,23 @@ class StudentForm(QWidget):
     student_saved = pyqtSignal()    
     def __init__(self) -> None:
         super().__init__()
-        self.__student_db = StudentModel()
+        self.__student_model = StudentModel()
         self.student_id = None 
         mod_path = pathlib.Path(__file__).parent.parent
         uic.loadUi(mod_path / "views/student_form.ui",self)
         self.saveButton.clicked.connect(lambda: self.save_student())
         self.cancelButton.clicked.connect(lambda: self.close())
         
-    def save_student(self):
+    def save_student(self): 
         if self.student_id:
-            self.__student_db.update_student(
+            self.__student_model.update_student(
                 self.student_id,
                 self.firstNameTextField.text(),
                 self.lastNameTextField.text(),
                 self.emailTextField.text()
-            )
+                )  
         else:    
-            self.__student_db.create_student(
+            self.__student_model.create_student(
                 self.firstNameTextField.text(),
                 self.lastNameTextField.text(),
                 self.emailTextField.text()
@@ -36,7 +36,7 @@ class StudentForm(QWidget):
     
     def load_student_data(self, student_id):
         self.student_id = student_id
-        student_data = self.__student_db.get_student_by_id(student_id)
+        student_data = self.__student_model.get_student_by_id(student_id)
         if student_data:
             self.firstNameTextField.setText(student_data[1])
             self.lastNameTextField.setText(student_data[2])
