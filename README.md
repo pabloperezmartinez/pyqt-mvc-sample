@@ -11,7 +11,10 @@ Asegúrate de tener instaladas las siguientes bibliotecas antes de ejecutar el c
 - Psycopg2: para la comunicación con una base de datos PostgreSQL.
 
 Puedes instalar estas bibliotecas utilizando pip:
+
+```
 pip install PyQt5 psycopg2
+```
 
 ## Estructura del proyecto
 
@@ -26,8 +29,8 @@ pip install PyQt5 psycopg2
 ## Uso
 
 Para ejecutar la aplicación, simplemente ejecuta `main.py`:
-
+```
 python main.py
-
+```
 
 La aplicación mostrará una interfaz gráfica que permite interactuar con la base de datos PostgreSQL utilizando el patrón MVC.
