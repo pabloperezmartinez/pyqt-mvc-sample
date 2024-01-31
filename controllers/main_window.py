@@ -5,6 +5,7 @@ from PyQt5 import QtCore, uic
 from controllers.student_form import StudentForm
 
 from models.student_model import StudentModel
+from models.db_conector import DatabaseConnection
 
 class MainWindow(QMainWindow):
     def __init__(self) -> None:
@@ -83,5 +84,6 @@ class MainWindow(QMainWindow):
                 
     
     def closeEvent(self, ev):
-        self.__student_db.close()
+        db = DatabaseConnection()
+        db.close()
         return super().closeEvent(ev)

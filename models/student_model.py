@@ -1,9 +1,10 @@
-import psycopg2
+from models.db_conector import DatabaseConnection
 
 class StudentModel:
     def __init__(self) -> None:
-        self._conn = psycopg2.connect("dbname=pabloperez_1 user=postgres password=postgres host=localhost")
-        self._cur = self._conn.cursor()
+        db = DatabaseConnection()
+        self._conn = db.connection
+        self._cur = db.cursor
     
     def get_students(self):
         query = "SELECT * FROM students ORDER BY last_name"
@@ -40,7 +41,3 @@ class StudentModel:
         except Exception as e:
             print(f"Error al obtener el estudiante: {str(e)}")
             return None
-            
-    def close (self):
-        self._cur.close()
-        self._conn.close()
